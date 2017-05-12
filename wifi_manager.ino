@@ -29,15 +29,14 @@ void setup()
 	// Init wifi manager
 	// 
 	WiFiManager wifi_manager;
-Serial.println("Starting2");
 	
 	wifi_manager.setAPStaticIPConfig(IPAddress(10,0,0,1), IPAddress(10,0,0,1), IPAddress(255,255,255,0));\
-Serial.println("Starting3");
+
 	Serial.println("Connecting...");
 	wifi_manager.autoConnect(ap_name, ap_psk);
-Serial.println("Starting4");
+
 	wifi_manager.autoConnect("MagicButton", "12341234");
-Serial.println("Starting5");
+
 	Serial.println("Connected!");
 
 	// Set IO
