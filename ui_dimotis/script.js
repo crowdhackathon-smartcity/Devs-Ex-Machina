@@ -193,7 +193,7 @@ var ButtonEXM = new function()
         for(i in data)
         {
             var o = data[i];
-            owner_counters[o.owner] = Math.floor(o.waiting_time / 60);
+            owner_counters[o.owner] = Math.round(o.waiting_time / 60);
         }
 
         // Update data array
@@ -201,7 +201,10 @@ var ButtonEXM = new function()
         {
             var o_site = _data[1].sites[i];
 
-            o_site.wt_time = Math.floor(owner_counters[o_site.name]);
+            if(typeof owner_counters[o_site.name] == "undefined")
+                continue; // ??
+
+            o_site.wt_time = Math.round(owner_counters[o_site.name]);
         }
 
         update_views();
@@ -222,15 +225,23 @@ var ButtonEXM = new function()
 
             if ($details_people.html() != o_site.people)
             {
+                console.log("Updating...");
                 $details_people.html(o_site.people);
-                $details_avg_wt_time.html(o_site.wt_time);
-
-                $details_avg_wt_time_wrapper.addClass("indicate_changed");
                 $details_people_wrapper.addClass("indicate_changed");
 
                 setTimeout(function () {
-                    $details_avg_wt_time_wrapper.removeClass("indicate_changed");
                     $details_people_wrapper.removeClass("indicate_changed");
+                }, 1000);
+            }
+
+            if ($details_avg_wt_time.html() != o_site.wt_time)
+            {
+                console.log("Updating time");
+                $details_avg_wt_time.html(o_site.wt_time);
+                $details_avg_wt_time_wrapper.addClass("indicate_changed");
+
+                setTimeout(function () {
+                    $details_avg_wt_time_wrapper.removeClass("indicate_changed");
                 }, 1000);
 
                 $("#details_avg_wt_time_wrapper").removeClass("indicator_l0 indicator l1 indicatorl2")

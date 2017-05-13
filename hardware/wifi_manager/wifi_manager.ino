@@ -130,8 +130,7 @@ bool get_btn_status()
 
 void loop()
 {
-	//if(get_btn_status())
-	if(digitalRead(BTN_PIN))
+	if(get_btn_status())
 	{
 		Serial.println("Button press");
 		send_btn_press();
