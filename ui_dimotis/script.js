@@ -134,7 +134,7 @@ var ButtonEXM = new function()
         {
             $("<script>").attr("src", "http://83.212.123.145:1880/api/counter")
                 .appendTo("head");
-            $("<script>").attr("src", "http://83.212.123.145:1880/api/mean_time?mins=100")
+            $("<script>").attr("src", "http://83.212.123.145:1880/api/waiting_time")
                 .appendTo("head");
         }
 	}
@@ -164,13 +164,14 @@ var ButtonEXM = new function()
                 o_site.people = owner_counters[o_site.name];
             }
         }
-        else if(section == "mean_time")
+        else if(section == "waiting_time")
         {
             var owner_counters = [];
             for(i in data)
             {
                 var o = data[i];
-                owner_counters[o._id] = o.meanWaitingTime;
+                console.log(o);
+                owner_counters[o._id] = o.waitingTime;
             }
             for(var i in _data[1].sites)
             //for(var i in _data[_cur_cat_key].sites)
@@ -178,7 +179,7 @@ var ButtonEXM = new function()
                 //var o_site = _data[_cur_cat_key].sites[i];
                 var o_site = _data[1].sites[i];
 
-                o_site.wt_time = Math.floor(owner_counters[o_site.name] / 60);
+                o_site.wt_time = Math.floor(owner_counters[o_site.name]);
             }
         }
 

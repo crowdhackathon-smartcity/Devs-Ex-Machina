@@ -4,10 +4,20 @@
 #include <ESP8266WebServer.h>
 #include <WiFiManager.h>  
 
-// BTN pins
-const uint8_t BTN_PIN = 3;
-const uint8_t BTN_ID = 122;
-#define BTN_DELAY 2000
+// BTN pin
+const uint8_t BTN_PIN = 4;
+
+
+const uint8_t BTN_INPUT_ID = 122;
+const uint8_t BTN_OUTPUT_ID = 123;
+const uint16_t BTN_DELAY = 2000;
+
+// If 0 on setup, button is input
+// D0 on wemos
+const uint8_t PIN_MODE = 16;
+
+// btn_id to submit in request
+uint8_t btn_id;
 
 // AP Creds
 char ap_name[] = "MagicButton";
@@ -38,6 +48,19 @@ void setup()
 
 	// Set IO
 	pinMode(BTN_PIN, INPUT);
+	pinMode(PIN_MODE, INPUT);
+
+	// Decide if button is input or output
+	if(!digitalRead(PIN_MODE))
+	{
+		Serial.println("Button is INPUT");
+		btn_id = BTN_INPUT_ID;
+	}
+	else
+	{
+		Serial.println("Button is OUTPUT");
+		btn_id = BTN_OUTPUT_ID;
+	}
 }
 
 /************************************************
@@ -79,7 +102,7 @@ void send_req(String data, char* host, const char* path, int port)
 ************************************************/
 void send_btn_press()
 {
-	String path = host_path + String(BTN_ID);
+	String path = host_path + String(btn_id);
 
 	String data = String("GET ") + path + " HTTP/1.1\r\n" +
 	                 "Host: " + host_url + "\r\n" +
@@ -107,12 +130,10 @@ bool get_btn_status()
 
 void loop()
 {
-	// Input button pressed
-	Serial.println(digitalRead(3));
 	//if(get_btn_status())
 	if(digitalRead(BTN_PIN))
 	{
-		Serial.println("btn");
+		Serial.println("Button press");
 		send_btn_press();
 	}
 }
