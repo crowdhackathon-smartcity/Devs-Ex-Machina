@@ -6,7 +6,7 @@ function response_callback(section, data)
 var ButtonEXM = new function()
 {
 	// Index of currently viewed category
-	var _cur_cat_key, _cur_site_key;
+	var _cur_cat_key = 1, _cur_site_key;
 
     // temp
     this.get_data = function()
@@ -22,18 +22,18 @@ var ButtonEXM = new function()
 	var _data = [
 		{ category: "ΙΚΑ", sites: [] },
 		{
-			category: "ΚΕΠ",
+			category: "Υπηρεσίες Δ. Πειραιά",
 			sites: [
 				{
 					name: "owner2",
 					in_id: 124,
 					out_id: 125,
-					title: "Σύνταγμα",
+					title: "Διεύθ. Οικονομικών Υπηρεσιών",
 					lat: 37.974783,
 					long: 23.735324,
-					dist: 0.2,
-					wt_time: 9,
-					people: 3,
+					dist: 3.3,
+					wt_time: "",
+					people: "",
 					least_busy: "Τρίτη",
                     chart_data: [15, 9, 22, 13, 11, 18]
 				},
@@ -41,19 +41,20 @@ var ButtonEXM = new function()
 					name: "owner1",
 					in_id: 122,
 					out_id: 123,
-					title: "Δήμου αθηναίων",
+					title: "Ληξιαρχείο",
 					lat: 37.957978,
 					long: 23.727253,
-					dist: 0.3,
-					wt_time: 14,
-					people: 5,
+					dist: 6.1,
+					wt_time: "",
+					people: "",
 					least_busy: "Πέμπτη",
                     chart_data: [15, 12, 25, 7, 11, 18]
-				},
+				}/*,
 				{ title: "Σεπόλια", dist: 1.9, wt_time: 23, people: 7 },
 				{ title: "Καλλιθέα", dist: 3.9, wt_time: 26, people: 9 },
 				{ title: "Ταύρος", dist: 3.4, wt_time: 29, people: 10 },
 				{ title: "Περιστέρι", dist: 2.8, wt_time: 33, people: 13 }
+				*/
 			]
 		},
 		{ category: "Ταχυδρομεία", sites: [] },
@@ -65,6 +66,7 @@ var ButtonEXM = new function()
 	 *****************************************************************************************************************/
 	this.init = function()
 	{
+        // Remove "hidden" class from all hidden pages to allow anims
 		$("[id^=page_].hidden").hide().removeClass("hidden");
 
 		//
@@ -95,18 +97,22 @@ var ButtonEXM = new function()
 		populate_list($list_cats, _data);
 
 		//
-		// Populate KEP sites and switch on click
+		// Populate sites and switch on click
 		//
 		$list_cats.on("click", ".list-group-item", function()
 		{
 			// Get category key from attr and use to populate
 			var k = $(this).data("key");
-			build_page_sites(k);
 
-			switch_to("sites");
+            retrieve_data(function()
+            {
+                build_page_sites(k);
 
-			// Update cur cat key
-			_cur_cat_key = k;
+                switch_to("sites");
+
+                // Update cur cat key
+                _cur_cat_key = k;
+            });
 		});
 
 		//
@@ -128,59 +134,74 @@ var ButtonEXM = new function()
 	/*****************************************************************************************************************
 	 * Refresh latest data from server and update o_data
 	 *****************************************************************************************************************/
-	function retrieve_data()
+	function retrieve_data(callback)
 	{
+        console.log("Retrieving data (key " + _cur_cat_key + ")");
         if(typeof _cur_cat_key != "undefined")
         {
-            $("<script>").attr("src", "http://83.212.123.145:1880/api/counter")
-                .appendTo("head");
-            $("<script>").attr("src", "http://83.212.123.145:1880/api/waiting_time")
-                .appendTo("head");
+            $.get({
+                url: "http://83.212.123.145:1880/api/counter",
+                success: function(data)
+                {
+                    received_counter(data);
+                }
+            });
+
+            $.get({
+                url: "http://83.212.123.145:1880/api/waiting_time",
+                success: function(data)
+                {
+                    received_waiting_time(data);
+                }
+            });
+
+            if(typeof callback == "function")
+                callback();
         }
 	}
 
-    this.response_callback = function(section, data)
+    function received_counter(data)
     {
-        if(section == "counter")
+        var owner_counters = [];
+
+        for(i in data)
         {
-            var owner_counters = [];
-            for(i in data)
-            {
-                var o = data[i];
-                owner_counters[o.name] = o.counter;
-            }
-
-            for(var i in _data[1].sites)
-            //for(var i in _data[_cur_cat_key].sites)
-            {
-                //var o_site = _data[_cur_cat_key].sites[i];
-                var o_site = _data[1].sites[i];
-
-                var prev = o_site.people;
-
-                if(typeof owner_counters[o_site.name] == "undefined")
-                    continue;
-
-                o_site.people = owner_counters[o_site.name];
-            }
+            var o = data[i];
+            owner_counters[o.name] = o.counter;
         }
-        else if(section == "waiting_time")
-        {
-            var owner_counters = [];
-            for(i in data)
-            {
-                var o = data[i];
-                console.log(o);
-                owner_counters[o._id] = o.waitingTime;
-            }
-            for(var i in _data[1].sites)
-            //for(var i in _data[_cur_cat_key].sites)
-            {
-                //var o_site = _data[_cur_cat_key].sites[i];
-                var o_site = _data[1].sites[i];
 
-                o_site.wt_time = Math.floor(owner_counters[o_site.name]);
-            }
+        for(var i in _data[1].sites)
+        {
+            var o_site = _data[1].sites[i];
+
+            var prev = o_site.people;
+
+            if(typeof owner_counters[o_site.name] == "undefined")
+                continue;
+
+            o_site.people = owner_counters[o_site.name];
+        }
+
+        update_views();
+    }
+
+    function received_waiting_time(data)
+    {
+        var owner_counters = [];
+
+        // Map to array, owner=>waiting time
+        for(i in data)
+        {
+            var o = data[i];
+            owner_counters[o.owner] = Math.floor(o.waiting_time / 60);
+        }
+
+        // Update data array
+        for(var i in _data[1].sites)
+        {
+            var o_site = _data[1].sites[i];
+
+            o_site.wt_time = Math.floor(owner_counters[o_site.name]);
         }
 
         update_views();
