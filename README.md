@@ -35,5 +35,8 @@ In the previous example:
 * 56d53610b761baebe67a40b70e4c5eba63e90dbc16c23bc1097da01e1033d205 was the sentilo provider's key
 * 192.168.1.65 was the sentilo VM's IP
 * 8081 is the default port where sentilo's API is listening to
+* kede_provider is sentilo provider's id
+
+You can now open the 'mobile.htm' file with any browser and watch live data
 
 
