@@ -61,6 +61,9 @@ void setup()
 		Serial.println("Button is OUTPUT");
 		btn_id = BTN_OUTPUT_ID;
 	}
+
+	// Temp
+	pinMode(12, OUTPUT);
 }
 
 /************************************************
@@ -135,4 +138,9 @@ void loop()
 		Serial.println("Button press");
 		send_btn_press();
 	}
+
+	digitalWrite(12, HIGH);
+	delay(300);
+	digitalWrite(12, LOW);
+	delay(300);
 }

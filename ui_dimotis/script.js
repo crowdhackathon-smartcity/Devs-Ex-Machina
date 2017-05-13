@@ -20,9 +20,9 @@ var ButtonEXM = new function()
 	// busy_level: 0-2 (0 least busy)
 	//
 	var _data = [
-		{ category: "ΙΚΑ", sites: [] },
+		{ category: "Αθηναίων", sites: [] },
 		{
-			category: "Υπηρεσίες Δ. Πειραιά",
+			category: "Πειραιά",
 			sites: [
 				{
 					name: "owner2",
@@ -50,15 +50,14 @@ var ButtonEXM = new function()
 					least_busy: "Πέμπτη",
                     chart_data: [15, 12, 25, 7, 11, 18]
 				}/*,
-				{ title: "Σεπόλια", dist: 1.9, wt_time: 23, people: 7 },
-				{ title: "Καλλιθέα", dist: 3.9, wt_time: 26, people: 9 },
-				{ title: "Ταύρος", dist: 3.4, wt_time: 29, people: 10 },
-				{ title: "Περιστέρι", dist: 2.8, wt_time: 33, people: 13 }
-				*/
+				{ title: "Αμαρουσίου", dist: 1.9, wt_time: 23, people: 7 },
+				{ title: "Καλλιθέας", dist: 3.9, wt_time: 26, people: 9 },
+				{ title: "Περιστερίου", dist: 3.4, wt_time: 29, people: 10 },*/
+
 			]
 		},
-		{ category: "Ταχυδρομεία", sites: [] },
-		{ category: "Τράπεζες", sites: [] }
+		{ category: "Καλλιθέας", sites: [] },
+		{ category: "Περιστερίου", sites: [] }
 	];
 
 	/*****************************************************************************************************************
@@ -81,6 +80,7 @@ var ButtonEXM = new function()
 			{
 			case "page_sites":
 				switch_to("categories");
+                update_views();
 				break;
 			case "page_details":
 				switch_to("sites");
@@ -225,7 +225,6 @@ var ButtonEXM = new function()
 
             if ($details_people.html() != o_site.people)
             {
-                console.log("Updating...");
                 $details_people.html(o_site.people);
                 $details_people_wrapper.addClass("indicate_changed");
 
@@ -236,7 +235,6 @@ var ButtonEXM = new function()
 
             if ($details_avg_wt_time.html() != o_site.wt_time)
             {
-                console.log("Updating time");
                 $details_avg_wt_time.html(o_site.wt_time);
                 $details_avg_wt_time_wrapper.addClass("indicate_changed");
 
@@ -248,9 +246,9 @@ var ButtonEXM = new function()
                     .addClass(get_indicator_class(o_site.wt_time));
             }
         }
-        else if(get_cur_page == "page_sites")
+        else if(get_cur_page() == "page_sites")
         {
-
+            build_page_sites(1);
         }
 	}
 
