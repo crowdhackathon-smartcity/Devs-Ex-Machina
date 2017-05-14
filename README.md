@@ -1,11 +1,16 @@
 # Devs-Ex-Machina
 
-This is a short guide on how to install and use our code.
 
-## Components used
+## The product
+We add smart buttons to public services in order to collect and store data for the amount of people waiting. We use this information to produce analytics that can be used from municipalities, public services and civilians, each for their own benefit.
+
+
+## Technologies used
 * Arduino
 * Sentilo
 * Node-red
+
+This is a short guide on how to install and use our code.
 
 ## Arduino
 1. Download and install [Arduino IDE](https://www.arduino.cc/en/main/software)
