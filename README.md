@@ -15,7 +15,7 @@ This is a short guide on how to install and use our code.
 1. If connected successfully it's ready to use
 
 ## Sentilo
-A preconfigured and ready to use VM can be found [here](http://www.sentilo.io/xwiki/bin/view/Sentilo.Community.Documentation/Use+a+Virtual+Machine). We used the destribution designed for Virtual Box, but the other one should have the same procedure to set it up. 
+A preconfigured and ready to use VM can be found [here](http://www.sentilo.io/xwiki/bin/view/Sentilo.Community.Documentation/Use+a+Virtual+Machine). We used the destribution designed for Virtual Box. 
 1. Download from the link above and import to Virtual Box. Follow the instrictions described on the link above.
 1. Create a provider, some components and a couple of sensors
 1. Check network connectivity and sentilo [API](http://www.sentilo.io/xwiki/bin/view/APIDocs/WebHome)
