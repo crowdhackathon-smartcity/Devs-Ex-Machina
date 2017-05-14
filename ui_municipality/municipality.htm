@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>NoQ - Υπηρεσίες Δήμου Πειραιά</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+	<script type="text/javascript" src="script.js"></script>
+	<link rel="stylesheet" type="text/css" href="normalize.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<script type="text/javascript">
+		$(function()
+		{
+			ButtonEXM.init();
+		});
+	</script>
+</head>
+<body>
+<!-- DASHBOARD -->
+<div id="page_dashboard" class="">
+	<div class="header">Δήμος Πειραιά - Ιστορικά δεδομένα</div>
+    <div class="container">
+        <div class="panel">
+            <div class="panel-body">
+                <h1 class="tac">Μέσος χρόνος αναμονής (ετήσια)</h1>
+                <div id="container_bars" style="min-width: 310px; height: 300px; max-width: 920px; margin: 0 auto"></div>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-body">
+                <h1 class="tac">Εβδομαδιαία κίνηση</h1>
+                <div id="container_pie" style="min-width: 310px; height: 400px; max-width: 920px; margin: 0 auto"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="application/javascript">
+    Highcharts.chart('container_bars', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            categories: [
+                'Ιαν',
+                'Φεβ',
+                'Μαρ',
+                'Απρ',
+                'Μάης',
+                'Ιουν',
+                'Ιούλ',
+                'Αύγ',
+                'Σεπ',
+                'Οκτ',
+                'Νοέ',
+                'Δεκ'
+            ],
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Μέσος Χρόνος Αναμονής'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} m</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'Διεύθυνση Ληξιαρχείου και Δημοτικής Κατάστασης',
+            data: [4, 6, 8, 13, 11, 10, 12, 8, 7, 7, 9, 10]
+
+        }, {
+            name: 'Διεύθυνση Οικονομικών Υπηρεσιών',
+            data: [5, 6, 5, 7, 8, 11, 12, 9, 8, 10, 11, 13]
+
+        }, {
+            name: 'Διεύθυνση Εξυπηρέτησης Πολιτών',
+            data: [13, 10, 14, 18, 21, 20, 22, 18, 19, 21, 23, 21]
+
+        }, {
+            name: 'Διεύθυνση Πολιτισμού',
+            data: [14, 16, 13, 17, 15, 17, 14, 16, 17, 20, 21, 18]
+
+        }]
+    });
+
+
+    Highcharts.chart('container_pie', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: ''
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Μέρα',
+            colorByPoint: true,
+            data: [{
+                name: 'Διεύθυνση Ληξιαρχείου και Δημοτικής Κατάστασης',
+                y: 10.38
+            }, {
+                name: 'Διεύθυνση Οικονομικών Υπηρεσιών',
+                y: 56.33,
+                sliced: true,
+                selected: true
+            }, {
+                name: 'Διεύθυνση Εξυπηρέτησης Πολιτών',
+                y: 24.03
+            }, {
+                name: 'Διεύθυνση Πολιτισμού',
+                y: 4.77
+            }, {
+                name: 'Διεύθυνση Δημοτικής Αστυνομίας',
+                y: 0.91
+            }, {
+                name: 'Διεύθυνση Διοίκησης',
+                y: 0.2
+            }]
+        }]
+    });
+</script>
+</body>
+</html>
