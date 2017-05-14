@@ -9,6 +9,7 @@ We add smart buttons to public services in order to collect and store data for t
 * Arduino
   ![](/hardware.jpg)
 * Sentilo
+  ![](/sentilo_admin.png)
   ![](/sentilo.png)
 * Node-red
   ![](/nodered.png)
