@@ -10,7 +10,7 @@ This is a short guide on how to install and use our code.
 ## Arduino
 1. Download and install [Arduino IDE](https://www.arduino.cc/en/main/software)
 1. Include esp8266 [addon](https://learn.sparkfun.com/tutorials/esp8266-thing-hookup-guide/installing-the-esp8266-arduino-addon)
-1. Upload code from Arduino directory
+1. Flash code from Arduino directory
 1. Access the captive portal that was created from another device (ex smartphone) and point to the network of your choice
 1. If connected successfully it's ready to use
 
