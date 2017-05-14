@@ -8,8 +8,9 @@ We add smart buttons to public services in order to collect and store data for t
 ## Technologies used
 * Arduino
 * Sentilo
+  ![](/sentilo.png)
 * Node-red
-  ![test](/nodered.png)
+  ![](/nodered.png)
 
 This is a short guide on how to install and use our code.
 
