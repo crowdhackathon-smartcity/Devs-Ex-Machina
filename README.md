@@ -9,6 +9,7 @@ We add smart buttons to public services in order to collect and store data for t
 * Arduino
 * Sentilo
 * Node-red
+  ![test](/nodered.png)
 
 This is a short guide on how to install and use our code.
 
