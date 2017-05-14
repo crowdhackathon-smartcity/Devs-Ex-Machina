@@ -26,9 +26,13 @@ char ap_psk[] = "1241234";
 // Host creds
 // char host_url[] = "example.com";
 // char host_port = 80;
-char host_url[] = "83.212.123.145";
-char host_path[] = "/api/btn?id=";
-int host_port = 1880;
+//char host_url[] = "83.212.123.145";
+//char host_path[] = "/api/btn?id=";
+//int host_port = 1880;
+// Sentilo endpoint
+char host_url[] = "192.168.1.65";
+char host_path[] = "/subscribe/data/kede_provider/";
+int host_port = 8081;
 
 
 
@@ -107,10 +111,15 @@ void send_btn_press()
 {
 	String path = host_path + String(btn_id);
 
-	String data = String("GET ") + path + " HTTP/1.1\r\n" +
-	                 "Host: " + host_url + "\r\n" +
-	                 "Connection: close\r\n"
-	                 "\r\n";
+//	String data = String("GET ") + path + " HTTP/1.1\r\n" +
+//	                 "Host: " + host_url + "\r\n" +
+//	                 "Connection: close\r\n"
+//	                 "\r\n";
+  String data = String("PUT ") + path + " HTTP/1.1\r\n" +
+                   "Host: " + host_url + "\r\n" +
+                   "IDENTITY_KEY: 56d53610b761baebe67a40b70e4c5eba63e90dbc16c23bc1097da01e1033d205" +
+                   "Connection: close\r\n"
+                   "\r\n";
 
 	send_req(data, host_url, path.c_str(), host_port);
 }
